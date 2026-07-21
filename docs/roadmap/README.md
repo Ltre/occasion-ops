@@ -22,6 +22,13 @@
 
 GitHub 总追踪 Issue：[#9 OccasionOps P0/P1 执行总追踪](https://github.com/Ltre/occasion-ops/issues/9)
 
+P0 领域词典：
+
+- [领域术语表](../domain/glossary.md)
+- [流水类型词典](../domain/flow-types.md)
+- [状态词典](../domain/statuses.md)
+- [关联关系词典](../domain/relations.md)
+
 ### P0：基础阻塞项
 
 - [#1 建立领域术语、流水类型与状态词典](https://github.com/Ltre/occasion-ops/issues/1)
