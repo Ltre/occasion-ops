@@ -1,8 +1,10 @@
 # OccasionOps 开发路线图
 
-本目录用于沉淀 OccasionOps 的需求分析、领域边界和分阶段开发计划。
+本目录用于沉淀 OccasionOps 的需求分析、领域边界、分阶段开发计划和已确认需求变更。
 
 文档按主题拆分，避免把所有需求堆在一个文件中；各专题文档既描述“为什么需要”，也给出“第一阶段做什么、后续做什么、如何验收”。
+
+所有 Agent 在使用 roadmap 前，必须先阅读 [`docs/README.md`](../README.md)，并结合实时开发进度与测试记录推进工作。
 
 ## 初代版本决策
 
@@ -32,10 +34,65 @@ OccasionOps 初代版本以**资金流水记录及其正确性保障**为唯一�
 10. [开放问题与调研清单](./09-open-questions.md)
 11. [ChatGPT Work 交接与执行说明](./10-chatgpt-work-handoff.md)
 12. [初代资金流水 MVP](./11-initial-money-mvp.md)
+13. [已确认需求变更](./change-requests/README.md)
+
+## 文档驱动开发流程
+
+### 实时开发进度
+
+每项开发工作必须在 `docs/dev-process/` 中维护实时记录：
+
+```text
+dev-YYMMDD-功能名称或描述.md
+```
+
+进度文件必须说明当前状态、已完成事项、风险、阻塞、修改文件和下一步可执行动作。Agent 开始或恢复任务时，应先读取最新相关进度文件。
+
+### 实时测试记录
+
+每项开发工作必须在 `docs/test-log/` 中维护对应测试记录：
+
+```text
+test-YYMMDD-功能名称或描述.md
+```
+
+开发与测试文件使用相同日期和功能描述。没有对应测试记录的功能，不得标记完成。
+
+### 已确定需求变更
+
+已确定的需求变更必须：
+
+1. 在 `docs/roadmap/change-requests/` 中记录原需求、改后需求、原因和影响；
+2. 更新受影响的原 roadmap 文件，使其表达最新有效需求；
+3. 创建或更新 GitHub Issue 推动设计、实现、测试和迁移；
+4. 在对应开发进度与测试记录中引用该变更申请。
+
+Change request 用于保留差异与决策历史，不能替代原 roadmap 的更新。
+
+### Agent 主动推进
+
+只要不存在必须由项目所有者决定的阻塞项，Agent 应持续执行：
+
+```text
+读取 roadmap 与 change request
+→ 读取最新 dev process 与 test log
+→ 确认最小可交付切片
+→ 更新实时记录
+→ 实现并测试
+→ 回写文档、Issue、PR 与结果
+→ 继续下一条无阻塞任务
+```
+
+完整规则见：
+
+- [`docs/README.md`](../README.md)
+- [`docs/dev-process/README.md`](../dev-process/README.md)
+- [`docs/test-log/README.md`](../test-log/README.md)
+- [`docs/roadmap/change-requests/README.md`](./change-requests/README.md)
 
 ## 执行入口
 
-GitHub 总追踪 Issue：[#9 OccasionOps P0/P1 执行总追踪](https://github.com/Ltre/occasion-ops/issues/9)
+GitHub 总追踪 Issue：[#9 OccasionOps 初代资金 MVP 执行总追踪](https://github.com/Ltre/occasion-ops/issues/9)
 
 P0 领域词典：
 
@@ -56,12 +113,16 @@ P0 不要求先设计所有业务领域，只需优先定稿资金 MVP 会使用
 
 ### P1：初代资金 MVP
 
-- [#6 实现资金、垫付、报销与结算 MVP](https://github.com/Ltre/occasion-ops/issues/6)
+- [#6 交付初代资金流水 MVP](https://github.com/Ltre/occasion-ops/issues/6)
+  - [#10 最简资金记录入口与确认摘要](https://github.com/Ltre/occasion-ops/issues/10)
+  - [#11 资金守恒、幂等、防重复与审计](https://github.com/Ltre/occasion-ops/issues/11)
+  - [#12 垫付、报销与备用金闭环](https://github.com/Ltre/occasion-ops/issues/12)
+  - [#13 资金盘点、差异处理与未结事项](https://github.com/Ltre/occasion-ops/issues/13)
 
 ### P2：资金试点后扩展
 
-- [#7 实现礼金、采购与物料闭环 MVP](https://github.com/Ltre/occasion-ops/issues/7)
-- [#8 实现现场快捷入口、临时用户与弱网工作台](https://github.com/Ltre/occasion-ops/issues/8)
+- [#7 扩展礼金、采购与物料闭环](https://github.com/Ltre/occasion-ops/issues/7)
+- [#8 扩展完整现场协同与临时入口](https://github.com/Ltre/occasion-ops/issues/8)
 
 其中 #8 与资金直接相关的快捷记录、待确认、幂等和弱网能力应提前纳入 #6；非资金任务入口可以延后。
 
@@ -82,5 +143,7 @@ P0 不要求先设计所有业务领域，只需优先定稿资金 MVP 会使用
 6. 重要数据采用追加、更正和作废，不做无痕覆盖。
 7. AI 只提供建议和匹配，不直接替代关键资金事实确认。
 8. 每个阶段必须形成可演示、可对账、可恢复的业务闭环。
-9. 每项执行工作必须关联 GitHub Issue，关键决策必须回写 roadmap 或 ADR。
-10. Work 负责长期规划、研究、文档和任务推进；Codex 负责代码、测试、命令和 PR。
+9. 每项执行工作必须关联 GitHub Issue，关键决策必须回写 roadmap、change request 或 ADR。
+10. 每项开发必须维护实时 `dev-*` 进度文件和对应的 `test-*` 测试文件。
+11. Work 负责长期规划、研究、文档和任务推进；Codex 负责代码、测试、命令和 PR。
+12. Agent 在没有决策阻塞时必须主动继续推进，并在暂停时留下精确恢复动作。
