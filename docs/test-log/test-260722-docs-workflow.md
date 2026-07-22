@@ -3,9 +3,9 @@
 ## 元数据
 
 - 日期：2026-07-22
-- 状态：in-progress
+- 状态：passed
 - 分支：`dev/2607C-newcode`
-- 关联 Issue：待创建
+- 关联 Issue：[#14 强制维护实时开发进度、测试记录与需求变更闭环](https://github.com/Ltre/occasion-ops/issues/14)
 - 关联 PR：无
 - 对应开发进度：`docs/dev-process/dev-260722-docs-workflow.md`
 - 对应 roadmap：
@@ -39,48 +39,87 @@
 
 | 验收标准 | 测试方式 | 状态 | 证据 |
 | --- | --- | --- | --- |
-| 存在 docs 总入口 | 读取文件 | 待验证 | `docs/README.md` |
-| 开发进度使用 `dev-` 前缀 | 路径与内容检查 | 待验证 | `docs/dev-process/` |
-| 测试记录使用 `test-` 前缀 | 路径与内容检查 | 待验证 | `docs/test-log/` |
-| 开发与测试文件日期和描述配对 | 路径比较 | 待验证 | 本次两个记录文件 |
-| 已确定变更有 change request | 读取文件 | 待验证 | `cr-260722-docs-workflow.md` |
-| 原 roadmap 已同步更新 | 读取差异 | 待验证 | `docs/roadmap/README.md` 等 |
-| Agent 引导包含主动推进规则 | 内容审阅 | 待验证 | docs 与 dev-process README |
-| 已创建执行 Issue | GitHub Issue 检查 | 待验证 | 待创建 |
-| 文档之间可相互追溯 | 链接与路径检查 | 待验证 | 相关文档 |
+| 存在 docs 总入口 | 读取文件 | 通过 | `docs/README.md` |
+| 开发进度使用 `dev-` 前缀 | 路径与内容检查 | 通过 | `docs/dev-process/dev-260722-docs-workflow.md` |
+| 测试记录使用 `test-` 前缀 | 路径与内容检查 | 通过 | `docs/test-log/test-260722-docs-workflow.md` |
+| 开发与测试文件日期和描述配对 | 路径比较 | 通过 | 两个文件均为 `260722-docs-workflow` |
+| 已确定变更有 change request | 读取文件 | 通过 | `cr-260722-docs-workflow.md` |
+| 原 roadmap 已同步更新 | 读取差异 | 通过 | `docs/roadmap/README.md`、`10-chatgpt-work-handoff.md` |
+| Agent 引导包含主动推进规则 | 内容审阅 | 通过 | docs、dev-process 与 Work/Codex 指南 |
+| 已创建执行 Issue | GitHub Issue 检查 | 通过 | Issue #14 |
+| 文档之间可相互追溯 | 链接与路径检查 | 通过 | change request、dev、test 与 Issue 互相引用 |
 
 ## 自动化测试记录
 
-当前无产品代码测试命令。本次将在文档全部写入后，通过 GitHub 分支差异和逐文件读取验证结构与内容。
+本次没有产品代码测试命令。
+
+### 2026-07-22：GitHub 分支差异检查
+
+- 操作：比较 `main` 与 `dev/2607C-newcode`；
+- 结果：分支可读取，新增文档均存在；
+- 重点确认：
+  - `docs/README.md`；
+  - `docs/dev-process/README.md`；
+  - `docs/test-log/README.md`；
+  - `docs/roadmap/change-requests/README.md`；
+  - `dev-260722-docs-workflow.md`；
+  - `test-260722-docs-workflow.md`；
+  - roadmap 与 Work/Codex 交接更新。
 
 ## 人工与场景测试
 
-待完成：
+### 场景 1：Codex 从 docs 入口开始
 
-1. 模拟 Codex 从 `docs/README.md` 进入；
-2. 验证能找到 roadmap、change request、最新 dev process 和对应 test log；
-3. 验证暂停后能从“下一步可执行动作”恢复；
-4. 验证需求变更流程同时要求更新 roadmap 和 Issue；
-5. 验证开发进度和测试记录命名不会混淆。
+- 从 `docs/README.md` 可以找到 roadmap、change request、dev process、test log、domain 和 tech；
+- 结果：通过。
+
+### 场景 2：恢复一项中断工作
+
+- 从 dev process 可读取状态、已完成内容、风险和下一步可执行动作；
+- 从对应 test log 可读取测试状态、失败项和未测项；
+- 结果：通过。
+
+### 场景 3：处理已确定需求变更
+
+- change request 指南要求记录原需求、改后需求、原因和影响；
+- roadmap 指南要求同步更新原文件并创建 Issue；
+- 结果：通过。
+
+### 场景 4：检查命名配对
+
+- 开发记录：`dev-260722-docs-workflow.md`；
+- 测试记录：`test-260722-docs-workflow.md`；
+- 日期与功能描述一致；
+- 结果：通过。
+
+### 场景 5：Agent 主动推进
+
+- docs、dev-process 和 Work/Codex 指南均要求无决策阻塞时继续下一任务；
+- 暂停时必须留下阻塞、恢复条件和精确下一步；
+- 结果：通过。
 
 ## 权限、安全与审计测试
 
-本次不修改产品权限或数据。GitHub 写入通过当前集成执行，commit 可追溯。
+本次不修改产品权限或业务数据。GitHub 写入产生可追溯 commit，Issue #14 记录后续执行要求。
 
 ## 幂等、并发、弱网与恢复测试
 
-不适用于本次文档结构变更。文档规范要求后续产品开发必须记录这些测试。
+不适用于本次文档结构变更。规范已明确要求后续资金及产品功能在各自 test log 中记录这些测试。
 
 ## 失败项与缺陷
 
-当前无已知失败项。
+无阻塞性失败项。
 
 ## 未测试项及原因
 
 - 自动命名和必填章节校验：尚未实现脚本或 CI；
 - PR 门禁：尚未建立 PR 模板或 GitHub Actions；
-- 多 Agent 实际长期协作：需要在后续真实开发工作中验证。
+- 多 Agent 长期协作：需在下一项真实代码开发中持续验证。
+
+以上未测试项已由 Issue #14 跟踪，不影响本次文档工作流基础落地。
 
 ## 最终结论
 
-待完成 roadmap 更新、Issue 创建和最终分支差异验证后填写。
+本次文档驱动开发流程的目录、命名、交叉引用、roadmap 同步和执行 Issue 均已验证通过。
+
+测试状态：`passed`。
