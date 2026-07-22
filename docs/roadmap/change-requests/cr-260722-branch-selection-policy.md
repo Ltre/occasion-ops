@@ -3,14 +3,15 @@
 ## 元数据
 
 - 日期：2026-07-22
-- 状态：approved
+- 状态：implemented
 - 决策人：项目所有者
-- 关联 Issue：待创建
+- 关联 Issue：[#15 移除固定分支并遵循执行环境工作分支](https://github.com/Ltre/occasion-ops/issues/15)
 - 关联开发进度：`docs/dev-process/dev-260722-branch-selection-policy.md`
 - 关联测试记录：`docs/test-log/test-260722-branch-selection-policy.md`
 - 受影响文档：
   - `docs/README.md`
   - `docs/dev-process/README.md`
+  - `docs/test-log/README.md`
   - `docs/roadmap/10-chatgpt-work-handoff.md`
   - 已存在且写死特定分支的开发与测试记录
 
@@ -73,26 +74,29 @@ Agent 开始写入前需要确认当前工作分支来源，但通常无需询�
 
 ### 测试与验收
 
-需要检查：
+已验证：
 
-- 通用文档不再把 `dev/2607C-newcode` 当作固定工作分支；
+- 通用文档不再把临时开发分支当作固定工作分支；
 - Work/Codex 推荐提示改用环境工作分支；
-- `docs/README.md` 与 `docs/dev-process/README.md` 明确分支选择优先级；
+- `docs/README.md`、`docs/dev-process/README.md` 与 `docs/test-log/README.md` 明确分支选择和记录规则；
 - 已知历史 dev/test 文件中的误导性固定分支已修正；
-- 新规则已创建 Issue 推动持续执行。
+- 新规则已通过 Issue #15 推动持续执行；
+- 两个误创建的临时空文件已删除，最终目录树无残留。
 
 ## 建议如何修改
 
 - 在 `docs/README.md` 增加“分支选择与文档可移植性”；
-- 在 `docs/dev-process/README.md` 的模板和工作顺序中加入分支规则；
+- 在开发和测试模板中记录分支来源而不是预设分支；
 - 删除 Work 交接文档中的固定规划分支及固定分支提示；
 - 将历史进度与测试记录改为“当次执行环境工作分支”；
-- 后续可在文档检查脚本中检测通用文档中的硬编码分支。
+- 后续在文档检查脚本中检测通用文档里的误导性固定分支。
 
 ## 完成条件
 
-- [ ] 受影响的通用文档已更新；
-- [ ] 已知误导性固定分支引用已修正；
-- [ ] 开发进度与测试记录已创建并完成；
-- [ ] GitHub Issue 已创建；
-- [ ] 分支选择规则和文档可移植性验证通过。
+- [x] 受影响的通用文档已更新；
+- [x] 已知误导性固定分支引用已修正；
+- [x] 开发进度与测试记录已创建并完成；
+- [x] GitHub Issue #15 已创建；
+- [x] 分支选择规则和文档可移植性验证通过。
+
+本次需求变更已经完成文档落地。真实 Codex 代码任务中的持续验证与自动扫描由 Issue #15 跟踪。
