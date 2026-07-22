@@ -4,7 +4,8 @@
 
 - 日期：2026-07-22
 - 状态：passed
-- 分支：`dev/2607C-newcode`
+- 工作分支：由当次执行环境确定；本文档不指定后续默认分支
+- 被测版本追溯：通过本工作关联 commit 和 Issue
 - 关联 Issue：[#14 强制维护实时开发进度、测试记录与需求变更闭环](https://github.com/Ltre/occasion-ops/issues/14)
 - 关联 PR：无
 - 对应开发进度：`docs/dev-process/dev-260722-docs-workflow.md`
@@ -31,8 +32,8 @@
 ## 测试环境
 
 - GitHub 仓库：`Ltre/occasion-ops`；
-- 分支：`dev/2607C-newcode`；
-- 测试方式：GitHub 文件读取、分支差异检查和人工内容审阅；
+- 工作分支：由当次执行环境选定；本记录不设定项目默认分支；
+- 测试方式：GitHub 文件读取、工作分支与基准分支差异检查和人工内容审阅；
 - 产品代码和运行环境：本次不涉及。
 
 ## 验收标准映射
@@ -55,8 +56,8 @@
 
 ### 2026-07-22：GitHub 分支差异检查
 
-- 操作：比较 `main` 与 `dev/2607C-newcode`；
-- 结果：分支可读取，新增文档均存在；
+- 操作：比较当次工作分支与基准分支；
+- 结果：工作分支可读取，新增文档均存在；
 - 重点确认：
   - `docs/README.md`；
   - `docs/dev-process/README.md`；
@@ -65,6 +66,12 @@
   - `dev-260722-docs-workflow.md`；
   - `test-260722-docs-workflow.md`；
   - roadmap 与 Work/Codex 交接更新。
+
+### 2026-07-22：分支表述复核
+
+- 操作：检查本测试记录和对应开发进度是否把历史工作分支写成后续默认规则；
+- 结果：已改为“由当次执行环境确定”，实际版本通过 commit、PR 或 Issue 追溯；
+- 关联变更：`docs/roadmap/change-requests/cr-260722-branch-selection-policy.md`。
 
 ## 人工与场景测试
 
@@ -121,5 +128,7 @@
 ## 最终结论
 
 本次文档驱动开发流程的目录、命名、交叉引用、roadmap 同步和执行 Issue 均已验证通过。
+
+本记录仅描述当次测试上下文，不指定后续工作的默认分支。
 
 测试状态：`passed`。
