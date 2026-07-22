@@ -15,6 +15,19 @@
 - [服务端技术架构](./backend-architecture.md)
 - [客户端平台策略](./client-platform-strategy.md)
 - [对象存储与区域部署策略](./object-storage-and-region-strategy.md)
+- [密钥与敏感配置管理策略](./secrets-and-sensitive-configuration.md)
+
+## 强制安全入口
+
+任何任务只要涉及以下内容，必须先阅读[密钥与敏感配置管理策略](./secrets-and-sensitive-configuration.md)：
+
+- API Key、Token、密码或连接凭证；
+- 数据库、Redis、对象存储、微信平台、AI/OCR 或第三方服务配置；
+- TLS 私钥、JWT 签名密钥、Webhook Secret 或备份密钥；
+- CI/CD Secret、容器 Secret、远程配置中心或多节点部署；
+- 密钥轮换、撤销、迁移、区域复制或安全事件处置。
+
+仓库只允许保存配置结构、占位符和 Secret 引用，禁止保存任何真实秘密值。
 
 ## 文档职责
 
