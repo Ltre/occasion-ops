@@ -3,9 +3,9 @@
 ## 元数据
 
 - 日期：2026-07-22
-- 状态：approved
+- 状态：implemented
 - 决策人：项目所有者
-- 关联 Issue：待创建
+- 关联 Issue：[#16 建立 PWA、小程序与区域对象存储技术基线](https://github.com/Ltre/occasion-ops/issues/16)
 - 关联开发进度：`docs/dev-process/dev-260722-client-and-storage-platform.md`
 - 关联测试记录：`docs/test-log/test-260722-client-and-storage-platform.md`
 - 受影响 roadmap：
@@ -117,8 +117,8 @@
 
 ## Roadmap 更新清单
 
-- [ ] 更新 `docs/roadmap/00-product-scope.md`；
-- [ ] 更新 `docs/roadmap/README.md`；
+- [x] 更新 `docs/roadmap/00-product-scope.md`；
+- [x] 更新 `docs/roadmap/README.md`；
 - [x] 新增客户端平台策略；
 - [x] 新增对象存储与区域策略；
 - [x] 更新服务端技术架构；
@@ -126,18 +126,20 @@
 
 ## Issue 执行清单
 
-- [ ] 创建技术基线执行 Issue；
-- [ ] 拆解 PWA 与微信小程序代码骨架任务；
-- [ ] 拆解共享 API 契约和平台适配层任务；
-- [ ] 拆解国内对象存储 Provider 任务；
-- [ ] 拆解国际 Provider 契约验证任务。
+- [x] 创建技术基线执行 Issue #16；
+- [ ] 由 #16 拆解 PWA 与微信小程序代码骨架任务；
+- [ ] 由 #16 拆解共享 API 契约和平台适配层任务；
+- [ ] 由 #16 拆解国内对象存储 Provider 任务；
+- [ ] 由 #16 拆解国际 Provider 契约验证任务。
 
 ## 完成条件
 
-- [ ] 技术文档与 roadmap 已同步；
-- [ ] 客户端阶段和范围无歧义；
-- [ ] 国内优先、海外可选的存储策略无歧义；
-- [ ] 服务端架构不再将 S3 写成唯一默认；
-- [ ] 开发进度和测试记录完成；
-- [ ] GitHub Issue 已创建；
-- [ ] 文档交叉引用和验收检查通过。
+- [x] 技术文档与 roadmap 已同步；
+- [x] 客户端阶段和范围无歧义；
+- [x] 国内优先、海外可选的存储策略无歧义；
+- [x] 服务端架构不再将 S3 写成唯一默认；
+- [x] 开发进度和测试记录完成；
+- [x] GitHub Issue 已创建；
+- [x] 文档交叉引用和验收检查通过。
+
+本次需求变更的文档与执行入口已经完成。实际代码实现、云厂商选型和运行验证由 Issue #16 及其后续拆分 Issue 推进。
