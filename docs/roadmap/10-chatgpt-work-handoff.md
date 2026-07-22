@@ -1,27 +1,39 @@
-# ChatGPT Work 交接与执行说明
+# ChatGPT Work、Codex 与 Agent 交接执行说明
 
 ## 1. 用途
 
-本文档用于把 OccasionOps 从需求分析阶段平滑交接到 ChatGPT Work 中持续推进。
+本文档用于把 OccasionOps 从需求分析平滑交接到 ChatGPT Work、Codex 和其他 Agent 持续推进。
 
-ChatGPT Work 负责：
+所有 Agent 必须先阅读 `docs/README.md`。GitHub 继续作为事实来源，关键需求、变更、进度、测试、决策和验收结果必须最终回写仓库。
+
+ChatGPT Work 主要负责：
 
 - 持续整理需求与决策；
 - 根据 roadmap 拆解工作包；
 - 跟踪 GitHub Issues 和交付状态；
 - 输出领域模型、原型说明、测试场景和验收报告；
-- 在需要实现代码时，将明确的技术任务交给 Codex。
+- 维护 change request、开发进度和测试记录；
+- 在需要实现代码时，将清晰技术任务交给 Codex。
 
-GitHub 继续作为事实来源，所有关键决策、开发任务和验收标准应最终回写仓库。
+Codex 主要负责：
+
+- 项目代码、数据库、API 和前端实现；
+- 自动化测试、迁移、命令、调试和 CI；
+- 持续更新实时开发进度和测试记录；
+- 提交 commit、推送分支和创建 PR。
 
 ## 2. 当前项目状态
 
 - 仓库：`Ltre/occasion-ops`
 - 当前规划分支：`dev/2607C-newcode`
+- 文档总入口：`docs/README.md`
 - 需求与开发计划：`docs/roadmap/`
+- 实时开发进度：`docs/dev-process/`
+- 实时测试记录：`docs/test-log/`
+- 已确定需求变更：`docs/roadmap/change-requests/`
 - 当前阶段：初代资金流水 MVP 定义与实现拆解
 - 初代最高优先级：最简单、可核对、可追溯的资金流水记录
-- 根 README 已由项目所有者维护，本轮不再改动
+- 根 README 已由项目所有者维护，除非明确要求，不应修改
 
 ## 3. 当前产品决策
 
@@ -37,55 +49,78 @@ GitHub 继续作为事实来源，所有关键决策、开发任务和验收标�
 
 初代事实来源优先阅读：
 
+- `docs/README.md`
+- `docs/roadmap/README.md`
 - `docs/roadmap/11-initial-money-mvp.md`
 - `docs/roadmap/02-finance-and-ledger.md`
 - `docs/roadmap/05-field-ux.md`
 - `docs/roadmap/07-security-and-nfr.md`
 - `docs/roadmap/01-domain-model.md`
+- 相关 change request、dev process、test log 和 GitHub Issue
 
-## 4. Work 首次进入时的推荐指令
+## 4. Agent 开始或恢复任务时的读取顺序
 
-在 ChatGPT 顶部切换到 **Work**，从保存 OccasionOps 上下文的同一个 Project 中启动新 Work 对话，然后粘贴：
+每次必须按以下顺序读取：
+
+1. `docs/README.md`；
+2. `docs/roadmap/README.md`；
+3. 当前功能的 roadmap 文件；
+4. `docs/roadmap/change-requests/` 中相关已批准变更；
+5. `docs/dev-process/` 中该功能最新的 `dev-*` 文件；
+6. `docs/test-log/` 中对应的 `test-*` 文件；
+7. GitHub Issue、PR、commit 和现有代码。
+
+如果开发进度或测试记录尚不存在，必须在实际改代码前创建：
+
+```text
+docs/dev-process/dev-YYMMDD-功能名称或描述.md
+docs/test-log/test-YYMMDD-功能名称或描述.md
+```
+
+两个文件使用相同日期和功能描述。
+
+## 5. Work 首次进入时的推荐指令
+
+在 ChatGPT 顶部切换到 Work，从保存 OccasionOps 上下文的同一个 Project 中启动新 Work 对话，然后使用：
 
 ```text
 继续推进 GitHub 仓库 Ltre/occasion-ops。
 
-以 dev/2607C-newcode 分支的 docs/roadmap 为需求与开发计划事实来源。
+当前工作分支为 dev/2607C-newcode。
 初代版本以资金流水记录及正确性保障为唯一首要目标。
 
-优先阅读：
+先阅读：
+- docs/README.md
 - docs/roadmap/README.md
 - docs/roadmap/11-initial-money-mvp.md
-- docs/roadmap/02-finance-and-ledger.md
-- docs/roadmap/05-field-ux.md
-- docs/roadmap/07-security-and-nfr.md
 - docs/roadmap/10-chatgpt-work-handoff.md
-- GitHub Issue #6
-- GitHub Issue #9
+- 相关 change request
+- 相关最新 dev process 与对应 test log
+- GitHub Issue #6、#9 及当前执行 Issue
 
 工作规则：
 1. 不修改根 README，除非我明确要求；
-2. 优先完成资金 MVP 所需的最小 P0，不先扩展完整采购、物料、任务或施工模型；
-3. 首版必须支持最简单的收、支、转、垫付、报销和备用金记录；
-4. 未确认记录可以保存，但不能无提示地进入正式余额；
-5. 内部转移、垫付、报销和押金不得重复计入真实收支；
-6. 每项工作必须关联 GitHub Issue；
-7. 每个 Issue 必须包含背景、范围、非目标、验收标准和依赖；
-8. 需求或规则发生变化时，先更新 docs/roadmap，再安排代码实现；
-9. 涉及代码、测试、数据库迁移和仓库命令时，形成清晰技术任务并交给 Codex；
+2. 优先完成资金 MVP 所需最小 P0；
+3. 未确认记录不能无提示进入正式余额；
+4. 内部转移、垫付、报销和押金不得重复计入真实收支；
+5. 每项开发必须创建或更新 dev-* 和对应 test-* 文件；
+6. 每个 Issue 必须包含背景、范围、非目标、验收标准和依赖；
+7. 已确定需求变更必须先记录 change request，并更新原 roadmap；
+8. 涉及代码、测试、迁移和命令时形成清晰任务并交给 Codex；
+9. 没有项目所有者决策阻塞时，主动继续下一条可执行任务；
 10. AI 不得自动确认高风险资金事实。
 
-先检查当前开放 Issues 和 dev/2607C-newcode 相对 main 的差异，然后从资金 MVP 的最小实现切片开始执行。
+先检查开放 Issues、分支差异、最新开发进度和测试状态，然后给出并开始执行本次最小切片。
 ```
 
-## 5. Work 与 Codex 的职责边界
+## 6. Work 与 Codex 的职责边界
 
 ### Work 更适合
 
 - 资金场景研究与规则定稿；
 - 快速记录流程和确认摘要设计；
 - 资金状态机、异常和对账规则；
-- 路线图维护；
+- roadmap 与 change request 维护；
 - 产品原型说明；
 - 测试案例与验收清单；
 - Issue 拆解和优先级调整；
@@ -99,33 +134,60 @@ GitHub 继续作为事实来源，所有关键决策、开发任务和验收标�
 - 运行命令、调试和修复 CI；
 - 提交代码、推送分支和创建 PR。
 
-## 6. 工作循环
+职责不同不表示文档责任可转移。Work 和 Codex 都必须维护相关 `dev-*` 与 `test-*` 文件，并回写 Issue。
 
-每个资金工作包建议按以下循环推进：
+## 7. 主动工作循环
 
-1. **读取事实来源**：初代资金 roadmap、相关 Issue、现有实现和历史决策；
-2. **确认范围**：动作、最小必填字段、默认值、异常和验收标准；
-3. **产出设计**：流程、状态机、资金位置、成对流水、接口或页面说明；
-4. **建立场景测试**：正常、重复、弱网、冲突、超额、负余额和盘点差异；
-5. **拆解实现**：将可以编码的任务交给 Codex；
-6. **验证结果**：余额守恒、收支性质、权限、审计、幂等和可用性；
-7. **回写仓库**：更新文档、Issue 状态和必要的 ADR；
-8. **决定下一步**：进入下一资金切片，或回到规则验证。
+每个资金工作包按以下循环推进：
 
-## 7. 事实来源优先级
+1. **读取事实来源**：docs 总入口、roadmap、change request、进度、测试、Issue、PR 和代码；
+2. **确认范围**：动作、最小字段、默认值、异常、依赖和验收标准；
+3. **建立记录**：创建或更新 dev process 与 test log；
+4. **产出设计**：流程、状态机、资金位置、成对流水、接口或页面说明；
+5. **建立测试**：正常、重复、弱网、冲突、超额、负余额和盘点差异；
+6. **实现代码**：完成最小可交付切片；
+7. **验证结果**：余额守恒、收支性质、权限、审计、幂等、恢复和可用性；
+8. **回写仓库**：更新 dev process、test log、Issue、PR、roadmap 或 ADR；
+9. **主动继续**：没有决策阻塞时进入下一明确任务。
+
+暂停时，进度文件必须记录：
+
+- 当前精确状态；
+- 已完成和未完成内容；
+- 阻塞原因；
+- 恢复条件；
+- 下一条命令、文件修改或决策动作。
+
+## 8. 需求变更流程
+
+已经确定的需求变更必须按顺序执行：
+
+1. 创建 `docs/roadmap/change-requests/cr-*.md`；
+2. 记录原需求、改后需求、原因、影响和可选实现建议；
+3. 更新受影响的原 roadmap 文件；
+4. 创建或更新 GitHub Issue；
+5. 创建或更新对应 dev process 与 test log；
+6. 完成实现、迁移和验证；
+7. 将 change request 状态更新为 `implemented`。
+
+尚未确定的想法不得伪装成 approved change request。
+
+## 9. 事实来源优先级
 
 发生冲突时，按以下顺序处理：
 
 1. 用户最新明确指令；
-2. 已确认的 ADR 或 GitHub Issue 决策；
+2. 已批准的 change request、ADR 或 GitHub Issue 决策；
 3. `docs/roadmap/11-initial-money-mvp.md`；
 4. 其他 `docs/roadmap` 业务规则；
-5. 根 README 的项目级介绍；
-6. 代码中的历史行为。
+5. `docs/domain` 和 `docs/tech`；
+6. 最新 `docs/dev-process` 与 `docs/test-log`；
+7. 代码中的历史行为；
+8. 根 README 的项目介绍。
 
 若代码与已确认业务规则不一致，应先记录差异，再决定迁移或兼容策略，而不是默认为代码正确。
 
-## 8. 每个 Issue 的完成定义
+## 10. 每个 Issue 的完成定义
 
 Issue 完成至少满足：
 
@@ -134,12 +196,14 @@ Issue 完成至少满足：
 - 资金方向和余额守恒可验证；
 - 权限、审计、幂等和恢复要求已覆盖；
 - 快速记录流程完成可用性验证；
-- 新规则已写入相应 roadmap 或 ADR；
+- 新规则已写入相应 roadmap、change request 或 ADR；
+- 对应 dev process 状态为 `completed`；
+- 对应 test log 状态为 `passed`，或未通过项已有明确 Issue；
 - 没有遗留未说明的数据迁移风险；
-- 相关 PR、测试结果和演示说明已关联；
-- 未完成事项已拆为新的 Issue，而不是隐藏在评论中。
+- 相关 PR、commit、测试和演示互相链接；
+- 未完成事项已拆为新 Issue，而不是隐藏在评论中。
 
-## 9. 当前最优执行顺序
+## 11. 当前最优执行顺序
 
 1. 定义初代六类资金动作及最小必填字段；
 2. 建立不少于 30 个资金正常与异常场景；
